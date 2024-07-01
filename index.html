@@ -8,40 +8,40 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <form action="submit" class="signup">
+    <form action="" class="signup" novalidate>
       <div class="row">
         <label for="email">E-mail</label>
-        <input type="email" name="email" id="email" required/>
-        <div class="error"></div>
+        <input type="email" name="email" id="email" required />
+        <div class="error" id="error-email"></div>
       </div>
       <div class="row">
         <label for="country">Country</label>
-        <input type="text" name="country" id="country" required/>
-        <div class="error"></div>
+        <input type="text" name="country" id="country" required />
+        <div class="error" id="error-country"></div>
       </div>
       <div class="row">
         <label for="zip">Zip Code</label>
-        <input type="number" name="zip" id="zip" required/>
-        <div class="error"></div>
+        <input type="number" name="zip" id="zip" pattern="\d*{5}" autocomplete="off" required />
+        <div class="error" id="error-zip"></div>
       </div>
       <div class="row">
         <label for="password">Password</label>
         <div class="password-row">
-          <input type="password" name="password" id="password" required/>
+          <input type="password" name="password" id="password" minlength="8" required />
           <ul class="password-req-list">
             <li class="password-reqs">At least 8 characters</li>
             <li class="password-reqs">At least one uppercase letter</li>
             <li class="password-reqs">At least one number</li>
           </ul>
         </div>
-        <div class="error"></div>
+        <div class="error" id="error-password"></div>
       </div>
       <div class="row">
         <label for="pass-confirm">Password Confirmation</label>
-        <input type="password" name="pass-confirm" id="pass-confirm" required/>
-        <div class="error"></div>
+        <input type="password" name="pass-confirm" id="pass-confirm" required />
+        <div class="error" id="error-pass-confirm"></div>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit" id="submit-button">Submit</button>
     </form>
   </body>
 </html>

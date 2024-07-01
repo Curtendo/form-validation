@@ -55,13 +55,39 @@ input:focus {
   outline-color: #0074a6;
 }
 
-input:invalid {
+/* input:invalid {
+  outline-color: gray;
+} */
+
+input.interacted:invalid {
   outline-color: red;
+}
+
+input:valid {
+  outline: black 2px solid;
+}
+
+/* No spinner */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox no spinner*/
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 
 .error {
   margin-top: 3px;
   margin-bottom: 8px;
+  color: red;
+  font-size: 0.9rem;
+}
+
+.error active {
+  color: red;
 }
 
 button {
@@ -72,4 +98,8 @@ button {
   font-size: 1.2rem;
   border-radius: 8px;
   cursor: pointer;
+}
+
+button.green {
+  background-color: lightgreen;
 }
