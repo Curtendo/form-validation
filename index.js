@@ -14,32 +14,88 @@ const errorZip = document.querySelector('#error-zip');
 const errorPassword = document.querySelector('#error-password');
 const errorConfirm = document.querySelector('#error-pass-confirm');
 
-function attachBlurListener() {
+function attachListeners() {
   inputs.forEach((input) => {
     input.addEventListener('blur', () => {
       if (input.value !== '') {
         input.classList.add('interacted');
-        showError();
+        showError(input);
       }
     });
 
     input.addEventListener('input', () => {
       if (input.classList.contains('interacted')) {
-        showError();
+        showError(input);
       }
     });
   });
 }
 
-function showError() {
-  console.log('Show error called');
-  // Email
-  if (inputEmail.validity.valueMissing) {
-    errorEmail.textContent = 'You need to enter an email address.';
-  } else if (inputEmail.validity.typeMismatch) {
-    errorEmail.textContent = 'Entered value needs to be an email address.';
-  } else if (inputEmail.validity.valid) {
-    errorEmail.textContent = '';
+function showError(input) {
+  // Get input's error div
+  const inputError = input.parentElement.querySelector('.error');
+
+  if (input.name === 'password') {
+    validatePassword(input);
+    if (input.validity.valueMissing) {
+      errorPassword.textContent = '* This field is required.';
+    } else if (input.validity.typeMismatch) {
+      errorPassword.textContent = `Entered value needs to be a valid ${input.name}.`;
+    } else if (input.validity.patternMismatch) {
+      errorPassword.textContent = 'Password must meet requirements.';
+    } else if (input.validity.valid) {
+      errorPassword.textContent = '';
+    }
+    return;
+  }
+
+  if (input.name === 'pass-confirm') {
+    if (input.validity.valueMissing) {
+      inputError.textContent = '* This field is required.';
+    } else if (inputPassword.value !== inputConfirm.value) {
+      inputError.textContent = 'Confirmation password does not match password.';
+    } else {
+      inputError.textContent = '';
+    }
+    return;
+  }
+
+  if (input.validity.valueMissing) {
+    inputError.textContent = '* This field is required.';
+  } else if (input.validity.typeMismatch) {
+    inputError.textContent = `Entered value needs to be a valid ${input.name}.`;
+  } else if (input.validity.patternMismatch) {
+    inputError.textContent = 'Entered value needs to be 5 digits only.';
+  } else if (input.validity.valid) {
+    inputError.textContent = '';
+  }
+}
+
+function validatePassword(input) {
+  const atLeastEight = /.{8,}/;
+  const upperCase = /[A-Z]/;
+  const digit = /\d/;
+
+  const passReqEight = document.querySelector('#pass-eight');
+  const passReqUpper = document.querySelector('#pass-upper');
+  const passReqDigit = document.querySelector('#pass-digit');
+
+  if (atLeastEight.test(input.value)) {
+    passReqEight.classList.add('green');
+  } else {
+    passReqEight.classList.remove('green');
+  }
+
+  if (upperCase.test(input.value)) {
+    passReqUpper.classList.add('green');
+  } else {
+    passReqUpper.classList.remove('green');
+  }
+
+  if (digit.test(input.value)) {
+    passReqDigit.classList.add('green');
+  } else {
+    passReqDigit.classList.remove('green');
   }
 }
 
@@ -52,76 +108,32 @@ function clearErrors() {
 }
 
 form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
   clearErrors();
 
   let isFormValid = true;
 
   inputs.forEach((input) => {
+    input.classList.add('interacted');
+
     if (!input.validity.valid) {
+      showError(input);
       isFormValid = false;
-      if (input.dataset.isListenerAttached === false) {
-        input.classList.add('interacted');
-        attachInputListener(input);
-      }
     }
   });
 
   if (inputPassword.value !== inputConfirm.value) {
     isFormValid = false;
+    showError(inputConfirm);
   }
 
   if (!isFormValid) {
     e.preventDefault();
-    showError();
     return;
   }
 
-  submitButton.classList.add('green');
+  submitButton.classList.add('green-bg');
 });
 
-attachBlurListener();
-
-// inputEmail.addEventListener('input', () => {
-//   if (inputEmail.validity.valid) {
-//     errorEmail.classList.remove('active');
-//     errorEmail.textContent = '';
-//   } else {
-//     showError();
-//   }
-// });
-
-// inputCountry.addEventListener('input', () => {
-//   if (inputCountry.validity.valid) {
-//     errorCountry.classList.remove('active');
-//     errorCountry.textContent = '';
-//   } else {
-//     showError();
-//   }
-// });
-
-// inputZip.addEventListener('input', () => {
-//   if (inputZip.validity.valid) {
-//     errorZip.classList.remove('active');
-//     errorZip.textContent = '';
-//   } else {
-//     showError();
-//   }
-// });
-
-// inputPassword.addEventListener('input', () => {
-//   if (inputPassword.validity.valid) {
-//     errorPassword.classList.remove('active');
-//     errorPassword.textContent = '';
-//   } else {
-//     showError();
-//   }
-// });
-
-// inputConfirm.addEventListener('input', () => {
-//   if (inputConfirm.validity.valid && inputPassword.value === inputConfirm.value) {
-//     errorConfirm.classList.remove('active');
-//     errorConfirm.textContent = '';
-//   } else {
-//     showError();
-//   }
-// });
+attachListeners();

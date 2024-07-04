@@ -21,17 +21,17 @@
       </div>
       <div class="row">
         <label for="zip">Zip Code</label>
-        <input type="number" name="zip" id="zip" pattern="\d*{5}" autocomplete="off" required />
+        <input type="tel" name="zip" id="zip" pattern="\d{5}" autocomplete="off" required />
         <div class="error" id="error-zip"></div>
       </div>
       <div class="row">
         <label for="password">Password</label>
         <div class="password-row">
-          <input type="password" name="password" id="password" minlength="8" required />
+          <input type="password" name="password" id="password" pattern="(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}" minlength="8" required />
           <ul class="password-req-list">
-            <li class="password-reqs">At least 8 characters</li>
-            <li class="password-reqs">At least one uppercase letter</li>
-            <li class="password-reqs">At least one number</li>
+            <li class="password-reqs" id="pass-eight">At least 8 characters</li>
+            <li class="password-reqs" id="pass-upper">At least one uppercase letter</li>
+            <li class="password-reqs" id="pass-digit">At least one number</li>
           </ul>
         </div>
         <div class="error" id="error-password"></div>

@@ -55,10 +55,6 @@ input:focus {
   outline-color: #0074a6;
 }
 
-/* input:invalid {
-  outline-color: gray;
-} */
-
 input.interacted:invalid {
   outline-color: red;
 }
@@ -100,6 +96,14 @@ button {
   cursor: pointer;
 }
 
-button.green {
+button.green-bg {
   background-color: lightgreen;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
 }
